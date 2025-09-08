@@ -19,28 +19,32 @@ slack-bot-framework/
 ├── .env.example          # Environment variables template
 ├── .gitignore            # Git ignore file
 ├── package.json          # Project dependencies
+├── README.md             # This file
+├── CUSTOMIZATION.md      # Detailed customization guide with examples
 ├── view-contacts.js      # Utility script to view collected contacts
 ├── src/                  # Source code directory
 │   ├── app.js            # Main application entry point
+│   ├── config/           # Configuration files
+│   │   └── botConfig.js  # Customizable bot settings and defaults
 │   ├── bot/              # Bot logic and handlers
-│   │   ├── index.js      # Bot initialization and configuration
+│   │   ├── index.js      # Bot initialization and Slack app setup
 │   │   ├── handlers/     # Event and interaction handlers
-│   │   │   ├── messageHandlers.js  # Text message processing
+│   │   │   ├── messageHandlers.js  # Text message processing and LLM integration
 │   │   │   ├── actionHandlers.js   # Button clicks and form submissions
-│   │   │   └── eventHandlers.js    # Slack workspace events
+│   │   │   └── eventHandlers.js    # Slack workspace events and mentions
 │   │   └── conversations/  # Conversation flow definitions
-│   │       └── contactInfoFlow.js  # Contact collection workflows
+│   │       └── contactInfoFlow.js  # Contact collection form workflows
 │   ├── db/               # Database layer
-│   │   ├── index.js      # Database connection management
-│   │   ├── memoryStorage.js # In-memory fallback storage
+│   │   ├── index.js      # MongoDB connection management
+│   │   ├── memoryStorage.js # In-memory fallback storage for development
 │   │   └── models/       # Data models and schemas
-│   │       └── contact.js # Contact information model
+│   │       └── contact.js # Contact information model with validation
 │   ├── services/         # External service integrations
-│   │   └── llmService.js # AI/LLM service (OpenAI integration)
+│   │   └── llmService.js # OpenAI GPT integration for conversations
 │   └── utils/            # Utility modules
-│       ├── contactExtractor.js # Contact info extraction logic
-│       ├── logger.js     # Logging configuration
-│       └── validators.js # Input validation utilities
+│       ├── contactExtractor.js # Smart contact info extraction from text
+│       ├── logger.js     # Winston-based logging configuration
+│       └── validators.js # Email and phone validation utilities
 └── logs/                 # Application logs (auto-generated)
 ```
 
@@ -144,8 +148,12 @@ DB_NAME=your-bot-database
 PORT=3000
 ```
 
-### 3. Customize the Bot Personality
-Edit `src/services/llmService.js` to customize your bot's conversation style and behavior.
+### 3. Customize the Bot (Important!)
+Before deploying, customize the bot for your specific use case:
+
+- **Quick Setup**: Edit the system prompt in `src/services/llmService.js`
+- **Advanced Setup**: Modify settings in `src/config/botConfig.js`
+- **Detailed Guide**: See [CUSTOMIZATION.md](CUSTOMIZATION.md) for examples and advanced options
 
 ### 4. Start the Application
 ```bash

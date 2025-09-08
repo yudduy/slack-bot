@@ -1,5 +1,6 @@
-const { OpenAI } = require('openai'); // Import OpenAI library
+const { OpenAI } = require('openai');
 const logger = require('../utils/logger');
+const config = require('../config/botConfig');
 
 /**
  * LLM Service - Handles conversational AI interactions
@@ -19,7 +20,7 @@ class LLMService {
     this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
-    this.modelName = process.env.OPENAI_MODEL || 'gpt-4o'; // Default to gpt-4o
+    this.modelName = process.env.OPENAI_MODEL || config.llm.defaultModel;
     this.conversations = new Map(); // Store conversation history keyed by user ID
     this.userProfiles = new Map(); // Store user profile data like first name
 
@@ -42,7 +43,7 @@ class LLMService {
       
       // Get user profile data
       const userProfile = this.userProfiles.get(userId) || {};
-      const firstName = userProfile.firstName || "there"; // Default if name not found
+      const firstName = userProfile.firstName || config.conversation.defaultGreeting;
       
       // Create personalized system prompt - CUSTOMIZE THIS for your use case
       let systemContent = `You are a friendly and helpful conversational assistant. You are speaking with ${firstName}.
@@ -79,7 +80,7 @@ Remember: Your goal is to have a genuine conversation while naturally collecting
       const messagesPayload = [
         { role: 'system', content: systemContent },
         // Use the *current* conversation history
-        ...conversationHistory.slice(-10) 
+        ...conversationHistory.slice(-config.conversation.maxHistoryLength) 
       ];
 
       logger.info('Sending request to OpenAI LLM', { model: this.modelName, userId: userId, isFirst: isFirstUserMessage });
@@ -88,8 +89,8 @@ Remember: Your goal is to have a genuine conversation while naturally collecting
       const completion = await this.openai.chat.completions.create({
         model: this.modelName,
         messages: messagesPayload,
-        temperature: 0.7,
-        max_tokens: 300,
+        temperature: config.llm.temperature,
+        max_tokens: config.llm.maxTokens,
       });
 
       // Extract and save the LLM's response
