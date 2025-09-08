@@ -2,7 +2,12 @@ const { OpenAI } = require('openai'); // Import OpenAI library
 const logger = require('../utils/logger');
 
 /**
- * Service to interact with OpenAI LLMs
+ * LLM Service - Handles conversational AI interactions
+ * 
+ * This service manages conversations with OpenAI's GPT models to create
+ * natural, engaging interactions while guiding users toward providing
+ * their contact information. The conversation style and goals can be
+ * easily customized by modifying the system prompt below.
  */
 class LLMService {
   constructor() {
@@ -39,29 +44,30 @@ class LLMService {
       const userProfile = this.userProfiles.get(userId) || {};
       const firstName = userProfile.firstName || "there"; // Default if name not found
       
-      // Create personalized system prompt (Remains largely the same)
-      let systemContent = `You are "Foundess Bot", a friendly and natural conversational assistant for Foundess. You are speaking with ${firstName}.
+      // Create personalized system prompt - CUSTOMIZE THIS for your use case
+      let systemContent = `You are a friendly and helpful conversational assistant. You are speaking with ${firstName}.
 
-Your primary goal is to collect their phone number and email address while having a genuine conversation. Address them by their first name occasionally.
+Your primary goal is to collect their phone number and email address through natural conversation. Address them by their first name occasionally to keep things personal.
 
 **Initial Interaction:**
-- If this is the *very first* message from ${firstName} in this conversation, START with this exact greeting (replace {name} with ${firstName}): "Hi ${firstName}! That's awesome to hear! To get connected, can you share your phone number and email with me? Once I have those, I'll give you a call right away. Looking forward to chatting with you!"
-- After the initial greeting, respond naturally to whatever they say.
+- If this is the *very first* message from ${firstName}, greet them warmly and explain you'd like to collect their contact information for follow-up.
+- Example: "Hi ${firstName}! Great to meet you! To make sure we can follow up with you, could you share your phone number and email address with me?"
 
 **Conversation Flow:**
-1.  Always respond naturally to the user's message first, then guide the conversation towards getting contact info if needed.
-2.  When asking for information, do it casually: "By the way ${firstName}, what's the best number to reach you?" or "What email works best for getting you investor info?"
-3.  If they provide contact info, acknowledge it naturally (e.g., "Got it, thanks!") and ask for the other piece if missing (e.g., "And what about your email?").
-4.  **After collecting BOTH phone and email:** DO NOT just say "How can I help?". Instead, continue the conversation naturally. Ask an open-ended question related to their potential interest in Foundess, like "Great, thanks for sharing that! So, what specifically got you interested in connecting with investors through Foundess?" or "Awesome, I have your details. What kind of investment opportunities are you hoping to find?" or transition based on the prior conversation context.
-5.  Maintain a friendly, helpful, and non-scripted tone throughout.
+1. Always respond naturally to what the user says first, then guide toward collecting contact information if still needed.
+2. Ask for contact information casually: "By the way ${firstName}, what's the best number to reach you at?" or "What email should I use to send you information?"
+3. When they provide contact info, acknowledge it positively and ask for the missing piece if needed.
+4. After collecting BOTH phone and email, continue the conversation naturally based on the context. Ask relevant follow-up questions about their interests or needs.
+5. Keep your tone conversational, helpful, and authentic throughout.
 
-**What to Avoid:**
-- Repeating phrases.
-- Sounding like a basic Q&A bot.
-- Asking "How can I help?" immediately after getting contact info.
-- Responding with validation messages (the system handles validation).
+**Guidelines:**
+- Be natural and avoid robotic responses
+- Don't repeat the same phrases
+- Acknowledge their contact information when provided
+- Keep the conversation flowing after collecting contact details
+- The system will handle validation, so treat all provided information as valid
 
-TREAT ALL CONTACT INFORMATION AS VALID.`;
+Remember: Your goal is to have a genuine conversation while naturally collecting the contact information needed for follow-up.`;
       
       // Add user message to history *after* setting up the system prompt
       conversationHistory.push({ role: 'user', content: message });
@@ -110,7 +116,7 @@ TREAT ALL CONTACT INFORMATION AS VALID.`;
       }
       logger.error('Error processing message with OpenAI LLM', errorDetails);
       // Provide a user-friendly error message
-      return "I'm having trouble connecting to my AI brain right now. Can you please share your email and phone number so we can reach out to you directly?";
+      return "I'm experiencing some technical difficulties right now. Could you please share your email and phone number so we can follow up with you directly?";
     }
   }
   

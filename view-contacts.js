@@ -19,7 +19,7 @@ async function viewContacts() {
     // Connect to MongoDB
     console.log('Connecting to MongoDB...');
     await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: process.env.DB_NAME || 'foundess'
+      dbName: process.env.DB_NAME || 'contact-bot'
     });
     
     // Create a model from the schema

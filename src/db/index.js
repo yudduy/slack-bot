@@ -9,7 +9,7 @@ async function connect() {
   return new Promise(async (resolve, reject) => {
     try {
       await mongoose.connect(process.env.MONGODB_URI, {
-        dbName: process.env.DB_NAME || 'foundess'
+        dbName: process.env.DB_NAME || 'contact-bot'
       });
       logger.info('Connected to MongoDB');
       resolve();

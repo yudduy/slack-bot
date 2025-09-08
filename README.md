@@ -1,42 +1,47 @@
-# Foundess Ambassador Slack Bot
+# Conversational Contact Collection Slack Bot Framework
 
-A conversational Slack bot that acts as an ambassador for Foundess, engaging users in natural conversation while collecting their contact information (email and phone) for future outreach.
+An open-source, customizable Slack bot framework for building conversational bots that can collect contact information while engaging users in natural conversation. Perfect for lead generation, customer outreach, or any scenario where you need to gather user contact details through friendly interaction.
 
 ## Features
 
-- Acts as a Foundess company ambassador and proactively asks for contact information
-- Automatically extracts email and phone numbers from conversation
-- Fully conversational using a free, locally-hosted LLM (Ollama)
-- Engages in natural conversation on any topic with users
-- Validates input data
-- Stores contact information in MongoDB
-- Ready for future integration with voice agent calling functionality
+- **Conversational AI**: Powered by OpenAI's GPT models for natural, engaging conversations
+- **Smart Contact Extraction**: Automatically detects and extracts email addresses and phone numbers from user messages
+- **Flexible Storage**: Supports both MongoDB for persistent storage and in-memory storage for development
+- **Easy Customization**: Simple configuration to adapt the bot's personality and conversation flow
+- **Contact Management**: Built-in contact viewing and management utilities
+- **Robust Error Handling**: Graceful fallbacks and comprehensive logging
+- **Production Ready**: Socket Mode support with retry logic and connection management
 
 ## Project Structure
 
 ```
-foundess-slack-bot/
-├── .env                  # Environment variables
+slack-bot-framework/
+├── .env.example          # Environment variables template
 ├── .gitignore            # Git ignore file
 ├── package.json          # Project dependencies
+├── view-contacts.js      # Utility script to view collected contacts
 ├── src/                  # Source code directory
 │   ├── app.js            # Main application entry point
-│   ├── bot/              # Bot logic
-│   │   ├── index.js      # Bot initialization
-│   │   ├── handlers/     # Message and event handlers
-│   │   │   ├── messageHandlers.js  # Handle text messages
-│   │   │   ├── actionHandlers.js   # Handle button clicks, form submissions
-│   │   │   └── eventHandlers.js    # Handle Slack events
-│   │   └── conversations/  # Conversation flows
-│   │       └── contactInfoFlow.js  # Contact info collection flow
-│   ├── db/               # Database connections and models
-│   │   ├── index.js      # DB initialization
-│   │   └── models/       # Data models
-│   │       └── contact.js # Contact model
-│   └── utils/            # Utility functions
-│       ├── logger.js     # Logging utility
-│       └── validators.js # Input validation (email, phone)
-└── logs/                 # Log files (generated at runtime)
+│   ├── bot/              # Bot logic and handlers
+│   │   ├── index.js      # Bot initialization and configuration
+│   │   ├── handlers/     # Event and interaction handlers
+│   │   │   ├── messageHandlers.js  # Text message processing
+│   │   │   ├── actionHandlers.js   # Button clicks and form submissions
+│   │   │   └── eventHandlers.js    # Slack workspace events
+│   │   └── conversations/  # Conversation flow definitions
+│   │       └── contactInfoFlow.js  # Contact collection workflows
+│   ├── db/               # Database layer
+│   │   ├── index.js      # Database connection management
+│   │   ├── memoryStorage.js # In-memory fallback storage
+│   │   └── models/       # Data models and schemas
+│   │       └── contact.js # Contact information model
+│   ├── services/         # External service integrations
+│   │   └── llmService.js # AI/LLM service (OpenAI integration)
+│   └── utils/            # Utility modules
+│       ├── contactExtractor.js # Contact info extraction logic
+│       ├── logger.js     # Logging configuration
+│       └── validators.js # Input validation utilities
+└── logs/                 # Application logs (auto-generated)
 ```
 
 ## Setup Instructions
@@ -61,57 +66,142 @@ foundess-slack-bot/
 5. Install the app to your workspace
 6. Copy the Bot Token and Signing Secret to your `.env` file
 
-### Setting up Hyperbolic (for conversational AI)
+### Setting up OpenAI for Conversational AI
 
-This bot uses Hyperbolic.xyz, a cloud-based LLM provider, to provide conversational abilities:
+This framework uses OpenAI's GPT models to power natural conversations:
 
-1. Create an account at [Hyperbolic.xyz](https://app.hyperbolic.xyz)
-2. Get your API key from the dashboard
-3. Update your `.env` file with the API key:
+1. Create an account at [OpenAI](https://platform.openai.com)
+2. Generate an API key from your dashboard
+3. Add the API key to your `.env` file:
    ```
-   HYPERBOLIC_API_KEY=your-api-key-here
+   OPENAI_API_KEY=your-api-key-here
    ```
 
-> Note: You can use different models by changing the `HYPERBOLIC_MODEL` in your `.env` file. Options include `llama-3-70b-chat`, `mixtral-8x7b-instruct`, `claude-3-haiku`, etc. Check the [Models page](https://app.hyperbolic.xyz/models) for current offerings.
+> **Model Configuration**: You can customize the AI model by setting `OPENAI_MODEL` in your `.env` file. The default is `gpt-4o`, but you can use `gpt-3.5-turbo`, `gpt-4`, or other available models based on your needs and budget.
+
+### Setting up MongoDB (Optional)
+
+For persistent contact storage, you can configure MongoDB:
+
+1. **Local MongoDB**: Install MongoDB locally or use MongoDB Atlas (cloud)
+2. **Connection String**: Add your MongoDB connection details to `.env`:
+   ```
+   MONGODB_URI=mongodb://localhost:27017
+   DB_NAME=your-bot-database
+   ```
+
+> **Note**: If MongoDB is not configured, the bot will automatically fall back to in-memory storage for development purposes.
 
 ## Quick Start
 
 ```bash
-# 1. Install dependencies
+# 1. Clone the repository
+git clone <your-repo-url>
+cd slack-bot-framework
+
+# 2. Install dependencies
 npm install
 
-# 2. Add your Hyperbolic API key to .env file
-# Get your API key from app.hyperbolic.xyz
+# 3. Create environment configuration
+cp .env.example .env
+# Edit .env with your Slack and OpenAI credentials
 
-# 3. Start the bot (in development mode)
+# 4. Start the bot (development mode with auto-restart)
 npm run dev
 ```
 
-## Installation
+## Installation & Configuration
 
-1. Clone this repository
-2. Install dependencies:
-   ```
-   npm install
-   ```
-3. Update the `.env` file with your Slack credentials and Hyperbolic API key
-4. Start the application:
-   ```
-   npm start
-   ```
-   or for development with auto-restart:
-   ```
-   npm run dev
-   ```
+### 1. Clone and Install
+```bash
+git clone <your-repo-url>
+cd slack-bot-framework
+npm install
+```
 
-## Future Expansion
+### 2. Environment Configuration
+Create a `.env` file based on `.env.example`:
+```bash
+cp .env.example .env
+```
 
-The project is structured to allow for future expansion, particularly for:
+Required environment variables:
+```env
+# Slack Configuration
+SLACK_BOT_TOKEN=xoxb-your-bot-token
+SLACK_APP_TOKEN=xapp-your-app-token
+SLACK_SIGNING_SECRET=your-signing-secret
 
-1. Integrating with a voice agent system to automatically call collected phone numbers
-2. Enhancing the conversation flow with AI-powered responses
-3. Adding an admin dashboard for managing collected contacts
-4. Setting up scheduled follow-ups based on user interactions
+# OpenAI Configuration
+OPENAI_API_KEY=your-openai-api-key
+OPENAI_MODEL=gpt-4o
+
+# MongoDB Configuration (Optional)
+MONGODB_URI=mongodb://localhost:27017
+DB_NAME=your-bot-database
+
+# Application Settings
+PORT=3000
+```
+
+### 3. Customize the Bot Personality
+Edit `src/services/llmService.js` to customize your bot's conversation style and behavior.
+
+### 4. Start the Application
+```bash
+# Development mode (with auto-restart)
+npm run dev
+
+# Production mode
+npm start
+```
+
+### 5. View Collected Contacts
+```bash
+# Run the contact viewer utility
+node view-contacts.js
+```
+
+## Customization Guide
+
+### Bot Personality & Conversation Flow
+The bot's personality is defined in `src/services/llmService.js`. Key areas you can customize:
+
+- **System Prompt**: Modify the `systemContent` variable to change how your bot introduces itself and behaves
+- **Conversation Goals**: Adjust what information the bot tries to collect
+- **Response Style**: Change the tone, formality, and approach of conversations
+
+### Contact Information Extraction
+Customize what contact information to extract in `src/utils/contactExtractor.js`:
+
+- **Email Patterns**: Modify regex patterns for email detection
+- **Phone Formats**: Adjust phone number recognition and formatting
+- **Additional Fields**: Extend to capture other information (LinkedIn, company, etc.)
+
+### Data Storage
+Extend the contact model in `src/db/models/contact.js`:
+
+- **Additional Fields**: Add new fields like company, role, or custom notes
+- **Validation Rules**: Implement custom validation for your specific needs
+- **Indexing**: Optimize database queries with appropriate indexes
+
+## Example Use Cases
+
+- **Lead Generation**: Collect potential customer information at events or webinars
+- **Customer Support**: Gather contact details for follow-up assistance
+- **Event Registration**: Collect attendee information for events or workshops
+- **Newsletter Signup**: Build email lists through conversational engagement
+- **Sales Qualification**: Gather prospect information through natural conversation
+
+## Extending the Framework
+
+This framework is designed to be extensible. Common extensions include:
+
+1. **Additional LLM Providers**: Support for Anthropic Claude, local models, etc.
+2. **CRM Integration**: Connect to Salesforce, HubSpot, or other CRM systems
+3. **Email Automation**: Trigger email sequences based on collected information
+4. **Analytics Dashboard**: Track conversation metrics and contact collection rates
+5. **Multi-language Support**: Extend conversations to multiple languages
 
 ## License
 

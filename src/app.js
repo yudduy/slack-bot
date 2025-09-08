@@ -32,7 +32,7 @@ async function startAppWithRetry(appInstance, currentPort) {
         process.exit(1); // Exit if token is fundamentally wrong
       }      
       await appInstance.start(currentPort);
-      logger.info(`⚡️ Foundess Bot is running successfully on port ${currentPort}`);
+      logger.info(`⚡️ Contact Collection Bot is running successfully on port ${currentPort}`);
       logger.info(`Using Socket Mode: ${appInstance.socketMode ? 'Yes' : 'No'}`);
       
       // Attach diagnostic listeners *after* successful start attempt

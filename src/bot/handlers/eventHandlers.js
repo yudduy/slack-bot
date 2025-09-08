@@ -9,7 +9,7 @@ function register(app) {
   app.event('app_mention', async ({ event, say }) => {
     try {
       await say({
-        text: `Hi <@${event.user}>! I'm here to help collect contact information. If you'd like to share your details, just say "contact" or send me a direct message.`,
+        text: `Hi <@${event.user}>! I'm here to help collect contact information for follow-up. Feel free to send me a direct message to get started!`,
         thread_ts: event.ts
       });
     } catch (error) {
@@ -38,7 +38,7 @@ function register(app) {
               type: 'section',
               text: {
                 type: 'mrkdwn',
-                text: "I'm here to help collect your contact information so our team can reach out to you."
+                text: "I'm here to help collect your contact information for follow-up purposes."
               }
             },
             {

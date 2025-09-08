@@ -55,7 +55,7 @@ function register(app) {
       await newContact.save();
       
       // Confirm submission
-      await say(`Thank you! Your contact information has been saved. Our team will reach out to you soon. Here's what we received:\\n• Email: ${email}\\n• Phone: ${phone}`);
+      await say(`Thank you! Your contact information has been saved. We'll follow up with you soon. Here's what we received:\\n• Email: ${email}\\n• Phone: ${phone}`);
       
       logger.info('Contact information saved', { userId, email });
     } catch (error) {

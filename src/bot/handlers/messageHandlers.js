@@ -131,7 +131,7 @@ function register(app) {
       logger.error('Error handling message with LLM', { error });
       // Ensure the error message also respects threading
       await say({ 
-        text: "I'm having some trouble with my AI brain right now. Could you please share your email address and phone number so our team can reach out to you directly?",
+        text: "I'm experiencing some technical difficulties right now. Could you please share your email address and phone number so we can follow up with you directly?",
         thread_ts: message.thread_ts || message.ts // Reply in thread if exists, otherwise start one
       });
     }

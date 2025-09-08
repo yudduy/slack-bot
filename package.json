@@ -1,7 +1,7 @@
 {
-  "name": "foundess-slack-bot",
+  "name": "conversational-contact-bot",
   "version": "1.0.0",
-  "description": "Slack bot for collecting contact information",
+  "description": "Open-source Slack bot framework for conversational contact collection",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",

@@ -12,7 +12,7 @@ async function startCollection(say) {
           type: "section",
           text: {
             type: "mrkdwn",
-            text: "Great! I'd like to collect your contact information so our team can reach out to you."
+            text: "Great! I'd like to collect your contact information so we can follow up with you."
           }
         },
         {
