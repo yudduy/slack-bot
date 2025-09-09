@@ -2,7 +2,7 @@
 
 This guide will help you customize the contact collection bot for your specific needs.
 
-## Quick Customization Checklist
+## Customization Checklist
 
 ### 1. Bot Personality (Required)
 Edit `src/services/llmService.js` and modify the `systemContent` variable to change:
@@ -20,9 +20,9 @@ Edit `src/config/botConfig.js` to adjust:
 
 ### 3. Contact Information
 Modify what contact info to collect by editing:
-- `src/utils/contactExtractor.js` - Add new extraction patterns
-- `src/db/models/contact.js` - Add new database fields
-- `src/config/botConfig.js` - Update required/optional fields
+- `src/utils/contactExtractor.js` – Add new extraction patterns
+- `src/db/models/contact.js` – Add new database fields
+- `src/config/botConfig.js` – Update required/optional fields
 
 ## Detailed Customization Examples
 
@@ -32,12 +32,12 @@ Modify what contact info to collect by editing:
 
 ```javascript
 // In src/services/llmService.js, modify systemContent:
-let systemContent = `You are an event registration assistant for TechConf 2024. You are speaking with ${firstName}.
+let systemContent = `You are an event registration assistant for TechConf 2025. You are speaking with ${firstName}.
 
 Your goal is to collect their registration information: full name, email, company, and dietary restrictions.
 
 **Initial Interaction:**
-- Greet them enthusiastically about TechConf 2024
+- Greet them enthusiastically about TechConf 2025
 - Explain you need their info to complete registration
 - Example: "Hi ${firstName}! Excited to have you at TechConf 2024! To complete your registration, I'll need your email, company name, and any dietary restrictions."
 
@@ -67,24 +67,23 @@ module.exports = {
 
 ```javascript
 // In src/services/llmService.js:
-let systemContent = `You are a sales assistant for CloudSolutions Inc. You are speaking with ${firstName}.
+let systemContent = `You are a sales assistant representing Founders Inc, a company specializing in innovative business solutions. You are speaking with ${firstName}.
 
-Your goal is to qualify them as a potential customer by collecting: email, phone, company size, and current challenges.
+Your goal is to qualify ${firstName} as a potential customer for Founders Inc by collecting their email, phone number, company size, and understanding their current business challenges.
 
 **Conversation Approach:**
-- Be professional but friendly
-- Ask about their business challenges first
-- Position the information collection as "getting them the right solutions"
-- Example: "Hi ${firstName}! I'm here to help you find the right cloud solutions. To recommend the best fit, could you tell me about your company and current challenges?"
+- Maintain a professional yet approachable and friendly tone
+- Begin by asking about their business challenges to build rapport and understand their needs
+- Explain that collecting their information will help Founders Inc recommend the most suitable solutions for their business
+- Example: "Hi ${firstName}! I'm excited to learn more about your business and see how Founders Inc can help. Could you tell me a bit about your company and any challenges you're currently facing?"
 
 **Information Priority:**
-1. Business challenges (to build rapport)
+1. Business challenges (to personalize recommendations)
 2. Company size and industry
-3. Email and phone for follow-up
-4. Timeline for implementation
+3. Email and phone number for follow-up
+4. Timeline for implementing new solutions
 
-Focus on value and how CloudSolutions can help their specific situation.`;
-```
+Emphasize the value and expertise that Founders Inc brings, and tailor your responses to how Founders Inc can address their specific needs.`;
 
 ### Example 3: Newsletter Signup Bot
 

@@ -31,8 +31,8 @@ function register(app) {
       
       // If there are validation errors, inform the user
       if (errors.length > 0) {
-        const errorMessage = errors.join("\\n");
-        await say(`There were some issues with your submission:\\n${errorMessage}\\nPlease try again.`);
+        const errorMessage = errors.join("\n");
+        await say(`There were some issues with your submission:\n${errorMessage}\nPlease try again.`);
         return;
       }
       
@@ -55,7 +55,7 @@ function register(app) {
       await newContact.save();
       
       // Confirm submission
-      await say(`Thank you! Your contact information has been saved. We'll follow up with you soon. Here's what we received:\\n• Email: ${email}\\n• Phone: ${phone}`);
+      await say(`Thank you! Your contact information has been saved. We'll follow up with you soon. Here's what we received:\n• Email: ${email}\n• Phone: ${phone}`);
       
       logger.info('Contact information saved', { userId, email });
     } catch (error) {

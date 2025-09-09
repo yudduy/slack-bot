@@ -103,6 +103,13 @@ Remember: Your goal is to have a genuine conversation while naturally collecting
 
       conversationHistory.push({ role: 'assistant', content: llmResponse });
       
+      // Trim conversation history to prevent unbounded memory growth
+      // Keep only the last N entries as defined by maxHistoryLength
+      if (conversationHistory.length > config.conversation.maxHistoryLength) {
+        const trimmedHistory = conversationHistory.slice(-config.conversation.maxHistoryLength);
+        this.conversations.set(userId, trimmedHistory);
+      }
+      
       logger.info('Received response from OpenAI LLM', { userId: userId });
       return llmResponse;
 

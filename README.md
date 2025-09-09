@@ -193,6 +193,47 @@ Extend the contact model in `src/db/models/contact.js`:
 - **Validation Rules**: Implement custom validation for your specific needs
 - **Indexing**: Optimize database queries with appropriate indexes
 
+## Data Privacy & Compliance
+
+**Important Notice**: This project collects personally identifiable information (PII) including email addresses and phone numbers. Organizations using this framework must ensure compliance with applicable privacy laws such as GDPR, CCPA, and other data protection regulations.
+
+### Consent Requirements
+- **Explicit Consent**: Always obtain clear, informed consent before collecting any contact information
+- **Purpose Disclosure**: Clearly explain how the collected data will be used
+- **Opt-in Process**: Implement affirmative consent mechanisms rather than pre-checked boxes
+
+### Data Collection Best Practices
+- **Minimal Data**: Only collect contact information that is necessary for your specific use case
+- **Clear Purpose**: Inform users exactly why you're collecting their information
+- **Voluntary Participation**: Make it clear that providing contact information is optional
+
+### Data Security & Storage
+- **Encryption**: Implement encryption for data at rest and in transit
+- **Access Controls**: Use role-based access controls to limit who can view contact information
+- **Audit Logging**: Maintain logs of who accesses contact data and when
+- **Secure Infrastructure**: Deploy on secure, regularly updated infrastructure
+
+### Data Retention & Management
+- **Retention Policy**: Define and enforce clear data retention periods
+- **Regular Cleanup**: Implement automated processes to delete expired data
+- **Data Minimization**: Regularly review and remove unnecessary personal data
+
+### User Rights & Data Requests
+Organizations must provide users with:
+- **Access Rights**: Allow users to request copies of their stored data
+- **Correction Rights**: Enable users to update or correct their information
+- **Deletion Rights**: Provide a clear process for users to request data deletion
+- **Portability Rights**: Where applicable, allow users to export their data
+
+### Recommended Implementation
+1. Add privacy notices to your bot's initial interactions
+2. Implement consent tracking in your data models
+3. Create administrative tools for handling data subject requests
+4. Establish data retention schedules and automated cleanup
+5. Regular privacy impact assessments and compliance audits
+
+> **Legal Disclaimer**: This framework provides technical capabilities only. Organizations are responsible for ensuring their specific implementation complies with all applicable privacy laws and regulations in their jurisdiction.
+
 ## Example Use Cases
 
 - **Lead Generation**: Collect potential customer information at events or webinars
